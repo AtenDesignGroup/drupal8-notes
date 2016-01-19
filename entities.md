@@ -7,7 +7,7 @@
 
 ## Content vs Config Entity
 
-???
+??Content entities are fieldable??
 
 ## Entity
 
