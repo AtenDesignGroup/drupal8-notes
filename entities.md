@@ -9,7 +9,17 @@
 
 ???
 
+## Entity
+
+Location: `src/Entity`
+
+A class that extends an entity base and [implements the interface for the entity](#interface).
+
+Example entity base: [`ContentEntityBase`](https://github.com/drupal/drupal/blob/8.0.x/core/lib/Drupal/Core/Entity/ContentEntityBase.php)
+
 ## List Builder
+
+Location: `src/`
 
 Controls listing for the entity.
 
@@ -17,8 +27,12 @@ Parent list builder is usually: [`EntityListBuilder`](https://github.com/drupal/
 
 ## Interface
 
+Location: `src/`
+
 Creates a programatic `interface` for the entity.
 
 ## Access Control Handler
+
+Location: `src/`
 
 Manages access to the entity and actions/operations on the entity.
