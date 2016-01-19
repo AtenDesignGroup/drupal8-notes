@@ -42,3 +42,23 @@ Creates a programatic `interface` for the entity.
 Location: `src/`
 
 Manages access to the entity and actions/operations on the entity.
+
+## Form
+
+### Base form
+
+Location: `src/Entity/Form`
+
+Defines the form for entity edit.
+
+### Delete form
+
+Location: `src/Entity/Form`
+
+Creates the form for deleting this entity.
+
+### Settings form
+
+Location: `src/Entity/Form`
+
+??
