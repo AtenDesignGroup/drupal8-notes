@@ -13,7 +13,7 @@
 
 Location: `src/Entity`
 
-A class that extends an entity base and [implements the interface for the entity](#interface).
+A class that extends an entity base and [implements the interface for the entity](#interface). Includes an [annonation object](https://api.drupal.org/api/drupal/core%21core.api.php/group/annotation/8) for the entity.
 
 Example entity base: [`ContentEntityBase`](https://github.com/drupal/drupal/blob/8.0.x/core/lib/Drupal/Core/Entity/ContentEntityBase.php)
 
