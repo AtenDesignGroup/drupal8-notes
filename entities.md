@@ -17,6 +17,12 @@ A class that extends an entity base and [implements the interface for the entity
 
 Example entity base: [`ContentEntityBase`](https://github.com/drupal/drupal/blob/8.0.x/core/lib/Drupal/Core/Entity/ContentEntityBase.php)
 
+## Views data
+
+Location: `src/Entity`
+
+Provides data for the entity to Views. See [`EntityViewsData`](https://github.com/drupal/drupal/blob/8.0.x/core/modules/views/src/EntityViewsData.php) and [`EntityViewsDataInterface`](https://github.com/drupal/drupal/blob/8.0.x/core/modules/views/src/EntityViewsDataInterface.php).
+
 ## List Builder
 
 Location: `src/`
