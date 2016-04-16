@@ -31,3 +31,22 @@ class OrderManager implements ContainerInjectionInterface {
   }
 }
 ```
+
+### Update your module services.yml file
+
+Create or update your module's service YAML file, in our case `my_module.services.yml`:
+
+```yaml
+services:
+  my_module.order_manager:
+    class: Drupal\my_module\OrderManager
+```
+
+Clear/rebuild the Drupal cache: `drush cr`
+
+### Use your new service
+
+```php
+$orders = \Drupal::service('my_module.order_manager');
+// do things with your service!
+```
