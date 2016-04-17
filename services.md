@@ -88,3 +88,12 @@ class OrderManager implements ContainerInjectionInterface {
   }
 }
 ```
+
+You also need to update the services file:
+
+```yaml
+services:
+  my_module.order_manager:
+    class: Drupal\my_module\OrderManager
+    arguments: ['@database', '@entity.query']
+```
