@@ -26,7 +26,7 @@ class OrderManager implements ContainerInjectionInterface {
   /**
    * {@inheritDoc}
    */
-  public static create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container) {
     return static();
   }
 }
