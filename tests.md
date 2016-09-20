@@ -44,3 +44,24 @@ From your Drupal root:
 ```
 pushd core; php ../vendor/bin/phpunit ../modules/custom/my_example/tests; popd
 ```
+
+### Dependency injection
+
+Uses mock objects: https://phpunit.de/manual/current/en/test-doubles.html
+
+```php
+public function setUp() {
+  $this->database = $this->getMock('Drupal\Core\Database\ConnectionInterface');
+  $this->invalidator = $this->getMock('Drupal\Core\Cache\CacheTagsInvalidator');
+  $this->cache = $this->getMock('Drupal\Core\Cache\CacheFactoryInterface');
+  $this->entityQuery = $this->getMock('Drupal\Core\Entity\Query\QueryFactoryInterface');
+
+  $this->container = new Container();
+  $this->container->set('database', $this->database);
+  $this->container->set('cache_tags.invalidator', $this->invalidator);
+  $this->container->set('cache_factory', $this->cache);
+  $this->container->set('entity.query', $this->entityQuery);
+
+  $this->mes = MyExampleService::create($this->container);
+}
+```
