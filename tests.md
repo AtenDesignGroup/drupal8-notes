@@ -55,7 +55,8 @@ public function setUp() {
   $this->database = $this->getMock('Drupal\Tests\Core\Database\Stub\StubConnection', [], [$this->mockPdo, []]);
   $this->invalidator = $this->getMock('Drupal\Core\Cache\CacheTagsInvalidator');
   $this->cache = $this->getMock('Drupal\Core\Cache\CacheFactoryInterface');
-  $this->entityQuery = $this->getMock('Drupal\Core\Entity\Query\QueryFactoryInterface');
+  $this->entityManager = $this->getMock('Drupal\Core\Entity\EntityManagerInterface');
+    $this->entityQuery = $this->getMock('Drupal\Core\Entity\Query\QueryFactory', [], [$this->entityManager]);
 
   $this->container = new Container();
   $this->container->set('database', $this->database);
