@@ -51,7 +51,8 @@ Uses mock objects: https://phpunit.de/manual/current/en/test-doubles.html
 
 ```php
 public function setUp() {
-  $this->database = $this->getMock('Drupal\Core\Database\ConnectionInterface');
+  $this->mockPdo = $this->getMock('Drupal\Tests\Core\Database\Stub\StubPDO');
+  $this->database = $this->getMock('Drupal\Tests\Core\Database\Stub\StubConnection', [], [$this->mockPdo, []]);
   $this->invalidator = $this->getMock('Drupal\Core\Cache\CacheTagsInvalidator');
   $this->cache = $this->getMock('Drupal\Core\Cache\CacheFactoryInterface');
   $this->entityQuery = $this->getMock('Drupal\Core\Entity\Query\QueryFactoryInterface');
