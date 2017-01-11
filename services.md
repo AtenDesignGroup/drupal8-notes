@@ -13,8 +13,8 @@ In your module's `src` folder, create a service class. For this example, we'll m
 
 namespace Drupal\my_module;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Order manager service.
@@ -56,7 +56,8 @@ If your service needs additional services (database, entity query, etc.), you ca
 
 ```php
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\QueryFactory;
+use Drupal\Core\Entity\StorageInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 
 /**
  * Order manager service.
@@ -69,16 +70,16 @@ class OrderManager implements ContainerInjectionInterface {
   protected $database;
 
   /**
-   * @var \Drupal\Core\Entity\QueryFactory
+   * @var \Drupal\Core\Entity\StorageInterface
    */
-  protected $queryFactory;
+  protected $nodeStorage;
   
   /**
    * {@inheritdoc}
    */
-  public function __construct(\Drupal\Core\Database\Connection $database, \Drupal\Core\Entity\Query\QueryFactory $query_factory) {
+  public function __construct(Database $database, StorageInterface $node_storage) {
     $this->database = $database;
-    $this->queryFactory = $query_factory;
+    $this->nodeStorage = $node_storage;
   }
   
   /**
@@ -87,7 +88,7 @@ class OrderManager implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
-      $container->get('entity.query')
+      $container->get('entity_type.manager')->getStorage('node')
     );
   }
   
@@ -96,16 +97,15 @@ class OrderManager implements ContainerInjectionInterface {
    */
   public function getOrders() {
     // Gets fully loaded entities.
-    $orders = $this->queryFactory->get('node')
-      ->getByProperties(['type' => 'order']);
+    $orders = $this->nodeStorage->loadByProperties(['type' => 'order']);
 
     // More complex query.
-    $query = $this->queryFactory->get('node')
+    $query = $this->nodeStorage->getQuery()
       ->condition('type', 'blog')
       ->condition('created', '1234567', '<')
       ->sort('title');
     $result = $query->execute();
-    $nids = array_values($result);
+    $blogs = $this->nodeStorage->loadMultiple(array_values($result));
   }
 
 }
@@ -117,5 +117,4 @@ You also need to update the services file:
 services:
   my_module.order_manager:
     class: Drupal\my_module\OrderManager
-    arguments: ['@database', '@entity.query']
 ```
