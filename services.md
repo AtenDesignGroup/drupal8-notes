@@ -20,8 +20,6 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
  * Order manager service.
  */
 class OrderManager implements ContainerInjectionInterface {
-  public function __construct() {
-  }
   
   /**
    * {@inheritDoc}
@@ -29,6 +27,7 @@ class OrderManager implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static();
   }
+
 }
 ```
 
@@ -44,7 +43,7 @@ services:
 
 Clear/rebuild the Drupal cache: `drush cr`
 
-### Use your new service
+### Use your new service in procedural code (`.module` files)
 
 ```php
 $orders = \Drupal::service('my_module.order_manager');
@@ -56,16 +55,30 @@ $orders = \Drupal::service('my_module.order_manager');
 If your service needs additional services (database, entity query, etc.), you can inject those in the `OrderManager::create()` method.
 
 ```php
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\QueryFactory;
+
 /**
  * Order manager service.
  */
 class OrderManager implements ContainerInjectionInterface {
-  public $database;
-  public $entityQuery;
+
+  /**
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * @var \Drupal\Core\Entity\QueryFactory
+   */
+  protected $queryFactory;
   
-  public function __construct(\Drupal\Core\Database\Connection $database, \Drupal\Core\Entity\Query\QueryFactory $entity_query) {
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(\Drupal\Core\Database\Connection $database, \Drupal\Core\Entity\Query\QueryFactory $query_factory) {
     $this->database = $database;
-    $this->entityQuery = $entity_query;
+    $this->queryFactory = $query_factory;
   }
   
   /**
@@ -82,10 +95,19 @@ class OrderManager implements ContainerInjectionInterface {
    * Get order nodes.
    */
   public function getOrders() {
-    $query = $this->entityQuery->get('node')
-      ->condition('type', 'order');
-    $orders = $query->execute();
+    // Gets fully loaded entities.
+    $orders = $this->queryFactory->get('node')
+      ->getByProperties(['type' => 'order']);
+
+    // More complex query.
+    $query = $this->queryFactory->get('node')
+      ->condition('type', 'blog')
+      ->condition('created', '1234567', '<')
+      ->sort('title');
+    $result = $query->execute();
+    $nids = array_values($result);
   }
+
 }
 ```
 
