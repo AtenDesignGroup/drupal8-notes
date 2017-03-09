@@ -125,3 +125,10 @@ services:
 | ----------------- | --------------- |
 | `database` | `Drupal\Core\Database\Connection` |
 | `entity.query` | `Drupal\Core\Entity\Query\QueryFactory` |
+| `entity_type.manager` | `Drupal\Core\Entity\EntityTypeManagerInterface` |
+| `serializer` | `Symfony\Component\Serializer\SerializerInterface` |
+| `serializer.normalizer.list` | `Symfony\Component\Serializer\Normalizer\NormalizerInterface` |
+| `pathauto.alias_cleaner` | `Drupal\pathauto\AliasCleanerInterface` |
+| `plugin.manager.mail` | `Drupal\Core\Mail\MailManagerInterface` |
+ 
+current_user Drupal\Core\Session\AccountInterface
