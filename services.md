@@ -118,3 +118,10 @@ services:
   my_module.order_manager:
     class: Drupal\my_module\OrderManager
 ```
+
+## Common services used in containers
+
+| Container/Service | Class/Interface |
+| ----------------- | --------------- |
+| `database` | `Drupal\Core\Database\Connection` |
+| `entity.query` | `Drupal\Core\Entity\Query\QueryFactory` |
