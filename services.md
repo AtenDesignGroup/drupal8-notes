@@ -130,5 +130,4 @@ services:
 | `serializer.normalizer.list` | `Symfony\Component\Serializer\Normalizer\NormalizerInterface` |
 | `pathauto.alias_cleaner` | `Drupal\pathauto\AliasCleanerInterface` |
 | `plugin.manager.mail` | `Drupal\Core\Mail\MailManagerInterface` |
- 
-current_user Drupal\Core\Session\AccountInterface
+| `current_user` | `Drupal\Core\Session\AccountInterface` |
