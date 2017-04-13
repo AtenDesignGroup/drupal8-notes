@@ -58,6 +58,7 @@ If your service needs additional services (database, entity query, etc.), you ca
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\StorageInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Order manager service.
@@ -77,7 +78,7 @@ class OrderManager implements ContainerInjectionInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct(Database $database, StorageInterface $node_storage) {
+  public function __construct(Connection $database, StorageInterface $node_storage) {
     $this->database = $database;
     $this->nodeStorage = $node_storage;
   }
